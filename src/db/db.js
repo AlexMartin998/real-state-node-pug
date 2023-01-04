@@ -1,3 +1,5 @@
+'use strict';
+
 import { Sequelize } from 'sequelize';
 import {
     DB_DIALECT,
@@ -20,9 +22,14 @@ const db = new Sequelize(DB_NAME, DB_USER, DB_PASSWORD, {
     },
 });
 
-try {
-    await db.authenticate();
-    console.log('Successful connection to the database');
-} catch (error) {
-    console.log(error);
-}
+(async () => {
+    try {
+        await db.authenticate();
+        await db.sync();
+        console.log('Successful connection to the database');
+    } catch (error) {
+        console.log(error);
+    }
+})();
+
+export default db;

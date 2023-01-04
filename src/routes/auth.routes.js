@@ -2,6 +2,7 @@
 
 import { Router } from 'express';
 import {
+    registerNewUser,
     renderLoginForm,
     renderPasswordRecoveryForm,
     renderRegisterForm,
@@ -10,7 +11,8 @@ import {
 const router = Router();
 
 router.get('/login', renderLoginForm);
-router.get('/signup', renderRegisterForm);
+
+router.route('/signup').get(renderRegisterForm).post(registerNewUser);
 router.get('/olvide-password', renderPasswordRecoveryForm);
 
 export default router;
