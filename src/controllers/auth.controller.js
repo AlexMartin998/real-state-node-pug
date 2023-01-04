@@ -1,5 +1,6 @@
 'use strict';
 
+import { genTempToken } from '../helpers/index.js';
 import { User } from '../models/index.js';
 
 export const renderLoginForm = (_req, res) => {
@@ -15,9 +16,25 @@ export const renderRegisterForm = (_req, res) => {
 };
 
 export const registerNewUser = async (req, res) => {
-    const user = await User.create(req.body);
+    const { name, email, password } = req.body;
 
-    res.json({ user });
+    try {
+        await User.create({
+            name,
+            email,
+            password,
+            token: genTempToken(),
+        });
+
+        res.render('./templates/message', {
+            title: 'Cuenta Creada Correctamente',
+            message:
+                'Usuario registrado satisfactoriamente, verifica tu email.',
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ ok: false, msg: 'Algo salió mal!' });
+    }
 };
 
 export const renderPasswordRecoveryForm = (req, res) => {
