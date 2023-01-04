@@ -11,3 +11,9 @@ export const renderRegisterForm = (req, res) => {
         title: 'Crear Cuenta',
     });
 };
+
+export const renderPasswordRecoveryForm = (req, res) => {
+    res.render('./auth/recovery-password', {
+        title: 'Recupera tu acceso a Bienes Raices',
+    });
+};

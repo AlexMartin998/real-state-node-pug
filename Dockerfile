@@ -1,4 +1,4 @@
-FROM node:alpine
+FROM node:18-alpine
 
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
@@ -9,5 +9,5 @@ RUN npm i -g pnpm
 
 RUN pnpm install
 
-CMD [ "pnpm", "dev"]
+CMD [ "pnpm", "start"]
 
