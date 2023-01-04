@@ -2,12 +2,12 @@
 
 export const renderLoginForm = (req, res) => {
     res.render('./auth/login', {
-        authenticated: false,
+        title: 'Iniciar Sesion',
     });
 };
 
 export const renderRegisterForm = (req, res) => {
     res.render('./auth/register', {
-        authenticated: false,
+        title: 'Crear Cuenta',
     });
 };
