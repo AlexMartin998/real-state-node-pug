@@ -1,29 +1,29 @@
 version: '3.9'
 
 services:
-  mongo_db:
-    container_name: db_container
-    image: mongo
-    restart: always
-    ports:
-      - '2717:27017'
-    volumes:
-      - mongo_data:/data/db
+    mongo_db:
+        container_name: db_container
+        image: mongo
+        restart: always
+        ports:
+            - '2717:27017'
+        volumes:
+            - mongo_data:/data/db
 
-  api:
-    container_name: api_node
-    build: .
-    env_file: ./.env
-    ports:
-      - 3300:$PORT
-    environment:
-      - PORT=$PORT
-      # - MONGODB_URI=$MONGODB_URI
-      # - SECRETORPRIVATEKEY_JWT=$SECRETORPRIVATEKEY_JWT
-    links:
-      - mongo_db
-    depends_on:
-      - mongo_db
+    api:
+        container_name: api_node
+        build: .
+        env_file: ./.env
+        ports:
+            - 3300:$PORT
+        environment:
+            - PORT=$PORT
+            # - MONGODB_URI=$MONGODB_URI
+            # - SECRETORPRIVATEKEY_JWT=$SECRETORPRIVATEKEY_JWT
+        links:
+            - mongo_db
+        depends_on:
+            - mongo_db
 
 volumes:
-  mongo_data:
+    mongo_data:
