@@ -75,5 +75,6 @@ export const genNewPasswordRules = () => [
         min: 6,
     }),
     validateResetPass,
+
     // checkToken,
 ];

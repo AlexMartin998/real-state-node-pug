@@ -124,7 +124,7 @@ export const renderPasswordResetForm = async (req, res) => {
         res.render('./auth/reset-password', {
             title: 'Restablece tu Password',
             csrfToken: req.csrfToken(),
-            message: 'Hemos enviado un email con las instruccionesUsuario.',
+            message: 'Hemos enviado un email con las instrucciones.',
         });
     } catch (error) {
         console.log(error);

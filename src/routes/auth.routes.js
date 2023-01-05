@@ -3,13 +3,13 @@
 import { Router } from 'express';
 import {
     confirmAccount,
+    genNewPassword,
+    genRecoveryToken,
     registerNewUser,
     renderLoginForm,
     renderPasswordRecoveryForm,
-    renderRegisterForm,
-    genRecoveryToken,
     renderPasswordResetForm,
-    genNewPassword,
+    renderRegisterForm,
 } from '../controllers/index.js';
 import {
     genNewPasswordRules,
