@@ -20,6 +20,17 @@
         autoPan: true,
     }).addTo(mapa);
 
+    // TODO: Refactor
+    const position = marker.getLatLng();
+    geocodeService
+        .reverse()
+        .latlng(position, 13)
+        .run(function (error, result) {
+            // fill hidden inputs
+            document.querySelector('.calle').textContent =
+                result?.address?.Address ?? '';
+        });
+
     marker.on('moveend', function (e) {
         marker = e.target;
         const position = marker.getLatLng();
@@ -33,6 +44,16 @@
             .latlng(position, 13)
             .run(function (error, result) {
                 marker.bindPopup(result.address.LongLabel).openPopup();
+
+                // fill hidden inputs
+                document.querySelector('.calle').textContent =
+                    result?.address?.Address ?? '';
+                document.querySelector('#calle').value =
+                    result?.address?.Address ?? '';
+                document.querySelector('#lat').value =
+                    result?.latlng?.lat ?? '';
+                document.querySelector('#lng').value =
+                    result?.latlng?.lng ?? '';
             });
     });
 })();
