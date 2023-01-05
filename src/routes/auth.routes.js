@@ -2,6 +2,7 @@
 
 import { Router } from 'express';
 import {
+    confirmAccount,
     registerNewUser,
     renderLoginForm,
     renderPasswordRecoveryForm,
@@ -17,6 +18,9 @@ router
     .route('/signup')
     .get(renderRegisterForm)
     .post(signUpRules(), registerNewUser);
+
 router.get('/olvide-password', renderPasswordRecoveryForm);
+
+router.get('/confirm/:token', confirmAccount);
 
 export default router;

@@ -24,6 +24,16 @@ services:
             - 3300:$PORT
         environment:
             - PORT=$PORT
+            - DB_NAME=$DB_NAME
+            - DB_USER=$DB_USER
+            - DB_PASSWORD=$DB_PASSWORD
+            - DB_HOST=$DB_HOST
+            - DB_DIALECT=$DB_DIALECT
+            - EMAIL_USER=$EMAIL_USER
+            - EMAIL_PASS=$EMAIL_PASS
+            - EMAIL_HOST=$EMAIL_HOST
+            - EMAIL_PORT=$EMAIL_PORT
+            - BACKEND_URL=$BACKEND_URL
         depends_on:
             - db
         volumes:

@@ -1,6 +1,6 @@
 'use strict';
 
-import { genTempToken } from '../helpers/index.js';
+import { emailRegister, genTempToken } from '../helpers/index.js';
 import { User } from '../models/index.js';
 
 export const renderLoginForm = (_req, res) => {
@@ -9,9 +9,10 @@ export const renderLoginForm = (_req, res) => {
     });
 };
 
-export const renderRegisterForm = (_req, res) => {
+export const renderRegisterForm = (req, res) => {
     res.render('./auth/register', {
         title: 'Crear Cuenta',
+        csrfToken: req.csrfToken(),
     });
 };
 
@@ -19,12 +20,15 @@ export const registerNewUser = async (req, res) => {
     const { name, email, password } = req.body;
 
     try {
-        await User.create({
+        const newUser = await User.create({
             name,
             email,
             password,
             token: genTempToken(),
         });
+
+        // Send confirmation email
+        await emailRegister({ email, name, token: newUser.token });
 
         res.render('./templates/message', {
             title: 'Cuenta Creada Correctamente',
@@ -33,7 +37,7 @@ export const registerNewUser = async (req, res) => {
         });
     } catch (error) {
         console.log(error);
-        res.status(500).json({ ok: false, msg: 'Algo salió mal!' });
+        // TODO:  render error view
     }
 };
 
@@ -41,4 +45,31 @@ export const renderPasswordRecoveryForm = (req, res) => {
     res.render('./auth/recovery-password', {
         title: 'Recupera tu acceso a Bienes Raices',
     });
+};
+
+export const confirmAccount = async (req, res) => {
+    const { token } = req.params;
+
+    try {
+        const user = await User.findOne({ where: { token } });
+
+        if (!user)
+            return res.render('./auth/confirm-account', {
+                title: 'Error al confirmar la cuenta',
+                message:
+                    'Hubo un error al confirmar tu cuenta, intenta de nuevo.',
+                error: true,
+            });
+
+        user.token = null;
+        user.confirmed = true;
+        await user.save();
+
+        res.render('./auth/confirm-account', {
+            title: 'Cuenta confirmada',
+            message: 'La cuenta se confirmo correctamente.',
+        });
+    } catch (error) {
+        console.log(error);
+    }
 };

@@ -21,7 +21,10 @@ const User = db.define(
             allowNull: false,
         },
         token: DataTypes.STRING,
-        confirmed: DataTypes.BOOLEAN,
+        confirmed: {
+            type: DataTypes.BOOLEAN,
+            defaultValue: false,
+        },
     },
     {
         hooks: {

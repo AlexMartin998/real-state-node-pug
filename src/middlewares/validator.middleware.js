@@ -15,6 +15,7 @@ export const validateRegister = (req, res, next) => {
         return res.render('auth/register', {
             title: 'Crear Cuenta',
             errores: errors.array(),
+            csrfToken: req.csrfToken(),
             user: {
                 name: req.body.name,
                 email: req.body.email,
