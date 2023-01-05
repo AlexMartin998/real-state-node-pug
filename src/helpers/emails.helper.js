@@ -40,3 +40,26 @@ export const emailRegister = async emailData => {
         `,
     });
 };
+
+export const emailResetPassword = async emailData => {
+    const { name, email, token } = emailData;
+    console.log('email:', { name, email, token });
+
+    const transport = setTransport();
+
+    // Send mail
+    await transport.sendMail({
+        from: '"BienesRaices 👻" <hola@bnrs.com>',
+        to: email,
+        subject: 'Reestablece tu Password en BienesRaices.com',
+        text: 'Reestablece tu Password',
+        html: `<p>Hola ${name}, has solicitado restablecer tu password.</p>
+  
+        <p>Sigue el siguiente enlace para generar tu nuevo password:
+          <a href="${BACKEND_URL}/auth/forgot-password/${token}">Restablecer Password</a>
+        </p>
+  
+        <p>Si tu no solicitaste esto, puedes ignorar este mensaje.</p>
+      `,
+    });
+};

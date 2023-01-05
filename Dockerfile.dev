@@ -9,5 +9,5 @@ RUN npm i -g pnpm
 
 RUN pnpm install
 
-CMD [ "pnpm", "dev"]
+CMD [ "pnpm", "run", "dev"]
 

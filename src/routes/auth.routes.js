@@ -7,8 +7,15 @@ import {
     renderLoginForm,
     renderPasswordRecoveryForm,
     renderRegisterForm,
+    genRecoveryToken,
+    renderPasswordResetForm,
+    genNewPassword,
 } from '../controllers/index.js';
-import { signUpRules } from '../middlewares/index.js';
+import {
+    genNewPasswordRules,
+    genRecoveryTokenRules,
+    signUpRules,
+} from '../middlewares/index.js';
 
 const router = Router();
 
@@ -19,8 +26,16 @@ router
     .get(renderRegisterForm)
     .post(signUpRules(), registerNewUser);
 
-router.get('/olvide-password', renderPasswordRecoveryForm);
+router
+    .route('/forgot-password')
+    .get(renderPasswordRecoveryForm)
+    .post(genRecoveryTokenRules(), genRecoveryToken);
 
 router.get('/confirm/:token', confirmAccount);
+
+router
+    .route('/forgot-password/:token')
+    .get(renderPasswordResetForm)
+    .post(genNewPasswordRules(), genNewPassword);
 
 export default router;
