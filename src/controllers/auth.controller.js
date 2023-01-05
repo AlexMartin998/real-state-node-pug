@@ -46,7 +46,7 @@ export const login = async (req, res) => {
 
         return res
             .cookie('_token', jwt, { httpOnly: true }) // it wont allow access from JavaScript
-            .redirect('/mis-propiedades');
+            .redirect('/properties/mine');
     } catch (error) {
         console.log(error);
     }
