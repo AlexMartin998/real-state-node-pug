@@ -43,12 +43,32 @@ export const validateResetPass = (req, res, next) => {
     return next();
 };
 
+export const validateLogin = (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty())
+        return res.render('auth/login', {
+            title: 'Iniciar Sesion',
+            errores: errors.array(),
+            csrfToken: req.csrfToken(),
+        });
+
+    return next();
+};
+
 // Auths
 export const emailPassRules = () => [
     body('email', 'Invalid email!').isEmail(),
     body('password', 'Password must be longer than 6 characters!').isLength({
         min: 6,
     }),
+];
+
+export const loginRules = () => [
+    body('email', 'El Email es obligatorio').isEmail(),
+    body('password', 'El Password es obligatorio').isLength({
+        min: 6,
+    }),
+    validateLogin,
 ];
 
 export const signUpRules = () => [
@@ -75,6 +95,4 @@ export const genNewPasswordRules = () => [
         min: 6,
     }),
     validateResetPass,
-
-    // checkToken,
 ];

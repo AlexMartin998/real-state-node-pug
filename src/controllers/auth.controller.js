@@ -4,14 +4,52 @@ import bcryptjs from 'bcryptjs';
 import {
     emailRegister,
     emailResetPassword,
+    genJWT,
     genTempToken,
 } from '../helpers/index.js';
 import { User } from '../models/index.js';
 
-export const renderLoginForm = (_req, res) => {
+export const renderLoginForm = (req, res) => {
     res.render('./auth/login', {
         title: 'Iniciar Sesion',
+        csrfToken: req.csrfToken(),
     });
+};
+
+export const login = async (req, res) => {
+    const { email, password } = req.body;
+
+    try {
+        const user = await User.findOne({ where: { email } });
+        const matchPass = await user.comparePassword(password);
+        // TODO: refactorizar los render de error
+        if (!user || !matchPass)
+            return res.render('auth/login', {
+                title: 'Iniciar Sesion',
+                errores: [
+                    {
+                        msg: 'Hubo un problema al iniciar sesión. Comprueba tu correo electrónico y contraseña o crea una cuenta.',
+                    },
+                ],
+                csrfToken: req.csrfToken(),
+            });
+
+        if (!user.confirmed)
+            return res.render('auth/login', {
+                title: 'Iniciar Sesion',
+                errores: [{ msg: 'Su cuenta no ha sido confirmada' }],
+                csrfToken: req.csrfToken(),
+            });
+
+        // Generate JWT
+        const jwt = await genJWT(user.id);
+
+        return res
+            .cookie('_token', jwt, { httpOnly: true }) // it wont allow access from JavaScript
+            .redirect('/mis-propiedades');
+    } catch (error) {
+        console.log(error);
+    }
 };
 
 export const renderRegisterForm = (req, res) => {
@@ -136,6 +174,7 @@ export const genNewPassword = async (req, res) => {
     const { password } = req.body;
 
     try {
+        // The user isn't validated because it's already done by the previous method <- only in MVC
         const user = await User.findOne({ where: { token } });
         user.password = await bcryptjs.hash(password, 10);
         user.token = null;

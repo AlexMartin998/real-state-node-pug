@@ -34,6 +34,7 @@ services:
             - EMAIL_HOST=$EMAIL_HOST
             - EMAIL_PORT=$EMAIL_PORT
             - BACKEND_URL=$BACKEND_URL
+            - SECRETORKEY_JWT=$SECRETORKEY_JWT
         depends_on:
             - db
         volumes:

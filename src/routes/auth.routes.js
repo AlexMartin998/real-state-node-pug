@@ -5,6 +5,7 @@ import {
     confirmAccount,
     genNewPassword,
     genRecoveryToken,
+    login,
     registerNewUser,
     renderLoginForm,
     renderPasswordRecoveryForm,
@@ -14,12 +15,13 @@ import {
 import {
     genNewPasswordRules,
     genRecoveryTokenRules,
+    loginRules,
     signUpRules,
 } from '../middlewares/index.js';
 
 const router = Router();
 
-router.get('/login', renderLoginForm);
+router.route('/login').get(renderLoginForm).post(loginRules(), login);
 
 router
     .route('/signup')

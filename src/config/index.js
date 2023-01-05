@@ -18,3 +18,4 @@ export const EMAIL_HOST = process.env.EMAIL_HOST;
 export const EMAIL_PORT = process.env.EMAIL_PORT;
 
 export const BACKEND_URL = process.env.BACKEND_URL;
+export const SECRETORKEY_JWT = process.env.SECRETORKEY_JWT;
