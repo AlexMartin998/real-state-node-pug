@@ -27,7 +27,7 @@
         .latlng(position, 13)
         .run(function (error, result) {
             // fill hidden inputs
-            document.querySelector('.calle').textContent =
+            document.querySelector('.street').textContent =
                 result?.address?.Address ?? '';
         });
 
@@ -46,9 +46,9 @@
                 marker.bindPopup(result.address.LongLabel).openPopup();
 
                 // fill hidden inputs
-                document.querySelector('.calle').textContent =
+                document.querySelector('.street').textContent =
                     result?.address?.Address ?? '';
-                document.querySelector('#calle').value =
+                document.querySelector('#street').value =
                     result?.address?.Address ?? '';
                 document.querySelector('#lat').value =
                     result?.latlng?.lat ?? '';
