@@ -12,7 +12,7 @@ Dropzone.options.myDropzone = {
     maxFiles: 1,
     parallelUploads: 1,
 
-    autoProcessQueue: false, //q no se suba en auto
+    autoProcessQueue: false, //q no se suba en auto - requiere notificacion cuando subir
     addRemoveLinks: true,
     dictRemoveFile: 'Borrar Archivo',
     dictMaxFilesExceeded: 'El limite es 1 archivo',
@@ -23,4 +23,18 @@ Dropzone.options.myDropzone = {
     },
 
     paramName: 'image', // mismo q en multer en el router
+    init: function () {
+        const dropzone = this;
+        const btnPublish = document.querySelector('#publish');
+
+        btnPublish.addEventListener('click', function () {
+            dropzone.processQueue(); // <- autoProcessQueue
+        });
+
+        dropzone.on('queuecomplete', () => {
+            if (dropzone.getActiveFiles().length == 0) {
+                window.location.href = '/properties/mine';
+            }
+        });
+    },
 };

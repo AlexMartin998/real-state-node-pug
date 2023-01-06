@@ -6,6 +6,7 @@ import {
     renderAddImageView,
     renderCreatePropForm,
     renderMyProperties,
+    saveImage,
 } from '../controllers/index.js';
 import {
     newPropertyRules,
@@ -28,6 +29,6 @@ router
 router
     .route('/add-image/:id')
     .get(renderAddImageView)
-    .post(upload.single('image'));
+    .post(upload.single('image'), saveImage);
 
 export default router;

@@ -63,3 +63,28 @@ export const renderAddImageView = async (req, res) => {
         console.log(error);
     }
 };
+
+export const saveImage = async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        const property = await Property.findByPk(id);
+        // exista la property y NO este publicada y sea del user auth
+        if (
+            !property ||
+            property.published ||
+            +property.user_id !== +req.authenticatedUser.id
+        )
+            return res.redirect('/properties/mine');
+
+        // save img - req.file  lo registra multer
+        property.image = req.file.filename;
+        property.published = 1;
+        await property.save();
+
+        // ya no tiene el control del res, sino dropzone en el front
+        return res.redirect('/properties/mine');
+    } catch (error) {
+        console.log(error);
+    }
+};

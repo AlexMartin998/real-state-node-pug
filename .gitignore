@@ -17,6 +17,8 @@ notes*
 # map.*.js
 # addImage.*.js
 # *.*.js
+uploads
+
 
 # Editor directories and files
 .vscode/*
