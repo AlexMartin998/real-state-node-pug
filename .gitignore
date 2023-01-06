@@ -14,7 +14,9 @@ dist-ssr
 notes.*
 notes*
 .env
-map.*.js
+# map.*.js
+# addImage.*.js
+*.*.js
 
 # Editor directories and files
 .vscode/*

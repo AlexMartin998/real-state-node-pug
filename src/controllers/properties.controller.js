@@ -4,7 +4,6 @@ import { Category, Price, Property } from './../models/index.js';
 export const renderMyProperties = (req, res) => {
     res.render('./properties/admin', {
         title: 'Mis propiedades',
-        navbar: true,
     });
 };
 
@@ -16,7 +15,6 @@ export const renderCreatePropForm = async (req, res) => {
 
     res.render('./properties/create', {
         title: 'Crear Propiedad',
-        navbar: true,
         categories,
         prices,
         csrfToken: req.csrfToken(),
@@ -37,7 +35,29 @@ export const createProperty = async (req, res) => {
         });
         const { id } = newProperty;
 
-        res.redirect(`/add-image/${id}`);
+        res.redirect(`/properties/add-image/${id}`);
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+export const renderAddImageView = async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        const property = await Property.findByPk(id);
+        // exista la property y NO este publicada y sea del user auth
+        if (
+            !property ||
+            property.published ||
+            +property.user_id !== +req.authenticatedUser.id
+        )
+            return res.redirect('/properties/mine');
+
+        res.render('./properties/add-image', {
+            title: `Agregar imagen: ${property.title}`,
+            property,
+        });
     } catch (error) {
         console.log(error);
     }

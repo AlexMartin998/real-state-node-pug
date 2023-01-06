@@ -1,0 +1,27 @@
+extends ../layout/admin
+
+block styles
+    link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.3/dropzone.css")
+
+
+block contenido
+    //- div
+    .py-10
+        h1.text-4xl.my-10.font-extrabold.text-center Bienes
+            span.font-normal Raices
+        h2.text-center.text-2xl.font-bold=title
+
+
+        div(class='bg-white shadow py-8 px-4 rounded mx-auto max-w-3xl my-10 md:px-10')
+            form(id="myDropzone" class="dropzone border-dashed border-2 w-full min:h-96 h-auto rounded flex-col justify-center items-center" action=`/properties/add-image/${property.id}` method="POST")
+                input(type="hidden" name="_csrf" value=csrfToken)
+                
+
+            input(class="mt-5 w-full py-3 bg-indigo-600 hover:bg-indigo-700 rounded text-white font-bold uppercase cursor-pointer" type="submit" value="Publicar Propiedad")
+
+
+
+//- Solo Leaflet soporta ECMASCRIPT 7 con modules, por eso las cargamos aqui junto a los q no
+block scripts
+    script(src="/js/addImage.js")
+

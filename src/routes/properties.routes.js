@@ -3,6 +3,7 @@
 import { Router } from 'express';
 import {
     createProperty,
+    renderAddImageView,
     renderCreatePropForm,
     renderMyProperties,
 } from '../controllers/index.js';
@@ -19,5 +20,7 @@ router
     .route('/create')
     .get(renderCreatePropForm)
     .post(newPropertyRules(), createProperty);
+
+router.route('/add-image/:id').get(renderAddImageView);
 
 export default router;

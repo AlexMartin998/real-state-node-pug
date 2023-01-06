@@ -9,10 +9,15 @@ html(lang="es")
 
         link(rel="stylesheet", href="/css/app.css")
         link(rel="stylesheet", href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600&display=swap")
+
         block styles
         link(rel="stylesheet", href="/css/general.css")
 
+
     body.min-h-screen.bg-gray-50
+        //- include xq esta en el mismo directorio
+        include includes/header-admin
+
         main(class="mx-auto container mt-10 px-2")
             block contenido
 
