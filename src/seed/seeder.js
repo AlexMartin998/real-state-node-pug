@@ -1,10 +1,10 @@
 import { exit } from 'node:process';
 
-import { Category } from '../models/index.js';
-import { categories } from './index.js';
+import { Category, Price } from '../models/index.js';
+import { categories, prices } from './index.js';
 import db from './../db/db.js';
 
-export const importData = async () => {
+const importData = async () => {
     try {
         //Auth
         await db.authenticate();
@@ -13,7 +13,11 @@ export const importData = async () => {
         await db.sync();
 
         // insert data
-        await Category.bulkCreate(categories);
+        await Promise.all([
+            Category.bulkCreate(categories),
+            Price.bulkCreate(prices),
+        ]);
+
         console.log('Datos importados correctamente');
         exit(0); // correcto
     } catch (error) {
@@ -21,3 +25,21 @@ export const importData = async () => {
         exit(1); // error
     }
 };
+
+export const deleteData = async () => {
+    try {
+        // await Promise.all([
+        //     Category.destroy({ where: {}, truncate: true }),
+        //     Price.destroy({ where: {}, truncate: true }),
+        // ]);
+        await db.sync({ force: true });
+        console.log('\nDatos eliminados correctamente');
+        exit(0);
+    } catch (error) {
+        console.log(error);
+        exit(1); // error
+    }
+};
+
+if (process.argv[2] === '-i') importData();
+if (process.argv[2] === '-d') deleteData();

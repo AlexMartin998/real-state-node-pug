@@ -9,7 +9,9 @@
         "start": "node ./src/server.js",
         "css": "tailwindcss -i ./src/public/tailwind.css -o ./src/public/css/app.css --watch",
         "js": "webpack --watch",
-        "front": "concurrently \"pnpm run css\" \"pnpm run js\""
+        "front": "concurrently \"pnpm run css\" \"pnpm run js\"",
+        "db:import": "node ./src/seed/seeder.js -i",
+        "db:delete": "node ./src/seed/seeder.js -d"
     },
     "keywords": [],
     "author": "",

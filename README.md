@@ -1,4 +1,4 @@
-# Real Estate - Node with Pug and Tailwind CSS | Leaflet.js and ESRI geocoder
+# Real Estate MVC - Node with Pug and Tailwind CSS | Leaflet.js and ESRI geocoder
 
 
 ## Running the app
