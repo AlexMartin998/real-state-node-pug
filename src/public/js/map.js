@@ -2,8 +2,8 @@
 
 (function () {
     // maps/@-0.176701,-78.4815577,3a,75y,151.98h,85.24t/   <- google maps
-    const lat = -0.176701;
-    const lng = -78.4815577;
+    const lat = +document.querySelector('#lat').value || -0.176701;
+    const lng = +document.querySelector('#lng').value || -78.4815577;
     const mapa = L.map('map').setView([lat, lng], 16);
 
     // Provider & Geocoder
@@ -27,8 +27,10 @@
         .latlng(position, 13)
         .run(function (error, result) {
             // fill hidden inputs
-            document.querySelector('.street').textContent =
-                result?.address?.Address ?? '';
+            let street = document.querySelector('.street');
+            street.textContent =
+                street.textContent || (result?.address?.Address ?? '');
+            // document.querySelector('.street').textContent = result?.address?.Address ?? '';
         });
 
     marker.on('moveend', function (e) {

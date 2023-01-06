@@ -1,4 +1,30 @@
-export { default as Property } from './Property.js';
-export { default as User } from './User.js';
-export { default as Category } from './Category.js';
-export { default as Price } from './Price.js';
+import Category from './Category.js';
+import Price from './Price.js';
+import Property from './Property.js';
+import User from './User.js';
+
+// // Crea la FK en Property
+// Price.hasOne(Property, {
+//     foreignKey: 'price_id',
+//     as: 'property',
+// });
+// leerlo como Property tiene 1 Price
+Property.belongsTo(Price, {
+    foreignKey: 'price_id',
+    as: 'price',
+});
+
+// // Crea la FK en Price
+// Property.hasOne(Price, {
+//     // foreignKey: 'property_id',
+//     // as: 'property',
+// });
+
+// =========== derecha a izquierda  -  Crea la FK en Property
+// Category.hasMany(Property, {
+//     foreignKey: 'category_id',
+// });
+Property.belongsTo(Category, { foreignKey: 'category_id' });
+Property.belongsTo(User, { foreignKey: 'user_id' });
+
+export { Price, Property, Category, User };

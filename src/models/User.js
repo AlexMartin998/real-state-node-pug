@@ -32,6 +32,14 @@ const User = db.define(
                 user.password = await bcryptjs.hash(user.password, 10);
             },
         },
+        // suprimir info antes de pasarla
+        scopes: {
+            removePassword: {
+                attributes: {
+                    exclude: ['password', 'token', 'createdAt', 'updatedAt'],
+                },
+            },
+        },
     }
 );
 

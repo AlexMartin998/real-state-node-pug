@@ -1,6 +1,7 @@
 'use strict';
 
 import { body, validationResult } from 'express-validator';
+import { Category, Price } from './../models/index.js';
 import { isAlreadyRegistered } from '../helpers/index.js';
 
 export const validateRegister = (req, res, next) => {
@@ -55,6 +56,29 @@ export const validateLogin = (req, res, next) => {
     return next();
 };
 
+export const validateNewProperty = async (req, res, next) => {
+    console.log(req.body);
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        const [categories, prices] = await Promise.all([
+            Category.findAll(),
+            Price.findAll(),
+        ]);
+        // console.log(req.body);
+
+        return res.render('properties/create', {
+            title: 'Iniciar Sesion',
+            errores: errors.array(),
+            categories,
+            prices,
+            csrfToken: req.csrfToken(),
+            add: req.body,
+        });
+    }
+
+    return next();
+};
+
 // Auths
 export const emailPassRules = () => [
     body('email', 'Invalid email!').isEmail(),
@@ -95,4 +119,20 @@ export const genNewPasswordRules = () => [
         min: 6,
     }),
     validateResetPass,
+];
+
+// Properties
+export const newPropertyRules = () => [
+    body('title', 'Title is required!').notEmpty(),
+    body('description', 'Description is required!')
+        .notEmpty()
+        .isLength({ max: 210 })
+        .withMessage('Description is too long!'),
+    body('category', 'Category is required!').isNumeric(),
+    body('price', 'Select a price range!').isNumeric(),
+    body('rooms', 'Select the number of rooms!').isNumeric(),
+    body('parking', 'Select the number of parking spaces!').isNumeric(),
+    body('wc', 'Select the number of wc!').isNumeric(),
+    body('lat', 'Locate the Property on the map!').isNumeric(),
+    validateNewProperty,
 ];
