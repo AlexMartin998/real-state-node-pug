@@ -7,7 +7,11 @@ import {
     renderCreatePropForm,
     renderMyProperties,
 } from '../controllers/index.js';
-import { newPropertyRules, protectWithJwt } from '../middlewares/index.js';
+import {
+    newPropertyRules,
+    protectWithJwt,
+    upload,
+} from '../middlewares/index.js';
 
 const router = Router();
 
@@ -21,6 +25,9 @@ router
     .get(renderCreatePropForm)
     .post(newPropertyRules(), createProperty);
 
-router.route('/add-image/:id').get(renderAddImageView);
+router
+    .route('/add-image/:id')
+    .get(renderAddImageView)
+    .post(upload.single('image'));
 
 export default router;

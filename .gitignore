@@ -16,7 +16,7 @@ notes*
 .env
 # map.*.js
 # addImage.*.js
-*.*.js
+# *.*.js
 
 # Editor directories and files
 .vscode/*

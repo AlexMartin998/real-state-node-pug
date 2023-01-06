@@ -57,6 +57,7 @@ export const renderAddImageView = async (req, res) => {
         res.render('./properties/add-image', {
             title: `Agregar imagen: ${property.title}`,
             property,
+            csrfToken: req.csrfToken(),
         });
     } catch (error) {
         console.log(error);
