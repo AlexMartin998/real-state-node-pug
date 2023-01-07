@@ -1,0 +1,21 @@
+extends ./layout/public-app
+
+block styles
+    link(rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css")
+
+
+
+block contenido
+    .py-6
+        h1(class="text-center text-4xl font-extrabold") Ubicacion en el Mapa
+
+        div(id="map-home" class="h-[600px] mt-6")
+
+
+        //- pre= JSON.stringify(property, null, 3)
+
+
+block scripts
+    script(src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js")
+    script(src="/js/homeMap.js")
+        
