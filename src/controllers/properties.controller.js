@@ -9,7 +9,10 @@ export const renderMyProperties = async (req, res) => {
     try {
         const properties = await Property.findAll({
             where: { user_id: id },
-            include: [{ model: Category }, { model: Price, as: 'price' }], // as xq en esa relacion si estableci as
+            include: [
+                { model: Category, as: 'category' },
+                { model: Price, as: 'price' },
+            ], // as xq en esa relacion si estableci as - si en el model tiene as aqui tb debe tener sino da error
         });
 
         res.render('./properties/admin', {
@@ -165,6 +168,27 @@ export const deleteProperty = async (req, res) => {
         await property.destroy();
 
         res.redirect('/properties/mine');
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+export const renderPropertyView = async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        const property = await Property.findByPk(id, {
+            include: [
+                { model: Category, as: 'category' },
+                { model: Price, as: 'price' },
+            ],
+        });
+        if (!property) return res.redirect('/404');
+
+        res.render('./properties/show', {
+            title: property.title,
+            property,
+        });
     } catch (error) {
         console.log(error);
     }

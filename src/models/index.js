@@ -24,7 +24,7 @@ Property.belongsTo(Price, {
 // Category.hasMany(Property, {
 //     foreignKey: 'category_id',
 // });
-Property.belongsTo(Category, { foreignKey: 'category_id' });
+Property.belongsTo(Category, { foreignKey: 'category_id', as: 'category' });
 Property.belongsTo(User, { foreignKey: 'user_id' });
 
 export { Price, Property, Category, User };

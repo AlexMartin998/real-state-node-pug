@@ -9,6 +9,7 @@ import {
     renderCreatePropForm,
     renderEditView,
     renderMyProperties,
+    renderPropertyView,
     saveImage,
 } from '../controllers/index.js';
 import {
@@ -21,25 +22,28 @@ import {
 const router = Router();
 
 // All routes will be protected
-router.use(protectWithJwt);
+// router.use(protectWithJwt);
 
-router.get('/mine', renderMyProperties);
+router.get('/mine', protectWithJwt, renderMyProperties);
 
 router
     .route('/create')
-    .get(renderCreatePropForm)
-    .post(newPropertyRules(), createProperty);
+    .get(protectWithJwt, renderCreatePropForm)
+    .post(protectWithJwt, newPropertyRules(), createProperty);
 
 router
     .route('/add-image/:id')
-    .get(renderAddImageView)
-    .post(upload.single('image'), saveImage);
+    .get(protectWithJwt, renderAddImageView)
+    .post(protectWithJwt, upload.single('image'), saveImage);
 
 router
     .route('/edit/:id')
-    .get(renderEditView)
-    .post(editPropertyRules(), editProperty);
+    .get(protectWithJwt, renderEditView)
+    .post(protectWithJwt, editPropertyRules(), editProperty);
 
-router.route('/delete/:id').post(deleteProperty);
+router.route('/delete/:id').post(protectWithJwt, deleteProperty);
+
+// public
+router.get('/:id', renderPropertyView);
 
 export default router;
