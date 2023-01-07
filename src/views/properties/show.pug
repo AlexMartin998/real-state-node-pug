@@ -1,5 +1,9 @@
 extends ../layout/public-app
 
+block styles
+    link(rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css")
+
+
 block contenido
     //- div
     .py-6
@@ -38,8 +42,11 @@ block contenido
                 
                 div(class="p-5")
                     p(class="text-gray-600 font-bold text-xs") Direccion
-                        span(class="text-gray-800 block text-lg")= property.street
+                        span(class="text-gray-800 block text-lg" id="address")= property.street
 
 
         //- pre= JSON.stringify(property, null, 3)
         
+block scripts
+    script(src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js")
+    script(src="/js/showMap.js")
