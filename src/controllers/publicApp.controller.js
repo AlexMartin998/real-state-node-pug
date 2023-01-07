@@ -60,7 +60,10 @@ export const renderCategoriesView = async (req, res) => {
 };
 
 export const renderNotFoundPage = (req, res) => {
-    res.send('404');
+    res.render('404', {
+        title: 'No encontrado',
+        
+    });
 };
 
 export const searcher = (req, res) => {
