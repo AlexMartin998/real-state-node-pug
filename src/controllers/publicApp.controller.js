@@ -39,8 +39,24 @@ export const renderHome = async (req, res) => {
     }
 };
 
-export const renderCategoriesView = (req, res) => {
-    res.send('Category');
+export const renderCategoriesView = async (req, res) => {
+    const { id } = req.params;
+    try {
+        const category = await Category.findByPk(id);
+        if (!category) return res.redirect('/404');
+
+        const properties = await Property.findAll({
+            where: { category_id: id },
+            include: { model: Price, as: 'price' },
+        });
+
+        res.render('./category', {
+            title: `${category.name}s en Venta`,
+            properties,
+        });
+    } catch (error) {
+        console.log(error);
+    }
 };
 
 export const renderNotFoundPage = (req, res) => {

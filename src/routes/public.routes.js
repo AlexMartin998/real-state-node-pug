@@ -13,7 +13,7 @@ const router = Router();
 
 router.get('/', renderHome);
 
-router.get('categories/:id', renderCategoriesView);
+router.get('/categories/:id', renderCategoriesView);
 
 router.get('/404', renderNotFoundPage);
 
