@@ -11,7 +11,7 @@ export const getAllProperties = async (req, res) => {
             ],
         });
 
-        res.status(200).json({ properties });
+        res.status(200).json({ ok: true, properties });
     } catch (error) {
         res.status(500).json({ ok: false, msg: 'Something went wrong!' });
     }
