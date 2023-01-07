@@ -1,10 +1,23 @@
 'use strict';
+
 import { Category, Price, Property } from './../models/index.js';
 
-export const renderMyProperties = (req, res) => {
-    res.render('./properties/admin', {
-        title: 'Mis propiedades',
-    });
+export const renderMyProperties = async (req, res) => {
+    const { id } = req.authenticatedUser;
+
+    try {
+        const properties = await Property.findAll({
+            where: { user_id: id },
+            include: [{ model: Category }, { model: Price, as: 'price' }], // as xq en esa relacion si estableci as
+        });
+
+        res.render('./properties/admin', {
+            title: 'Mis propiedades',
+            properties,
+        });
+    } catch (error) {
+        console.log(error);
+    }
 };
 
 export const renderCreatePropForm = async (req, res) => {
@@ -82,7 +95,7 @@ export const saveImage = async (req, res) => {
         property.published = 1;
         await property.save();
 
-        // ya no tiene el control del res, sino dropzone en el front
+        // ya no tiene el control del res, sino dropzone en el front, pero se lo incluye para q siga el flujo
         return res.redirect('/properties/mine');
     } catch (error) {
         console.log(error);
