@@ -101,3 +101,51 @@ export const saveImage = async (req, res) => {
         console.log(error);
     }
 };
+
+export const renderEditView = async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        const property = await Property.findByPk(id);
+        if (!property || +property.user_id !== +req.authenticatedUser.id)
+            return res.redirect('/properties/mine');
+
+        const [categories, prices] = await Promise.all([
+            Category.findAll(),
+            Price.findAll(),
+        ]);
+
+        res.render('./properties/edit', {
+            title: `Editar Propiedad: ${property.title}`,
+            categories,
+            prices,
+            csrfToken: req.csrfToken(),
+            add: property,
+        });
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+export const editProperty = async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        const property = await Property.findByPk(id);
+        if (!property || +property.user_id !== +req.authenticatedUser.id)
+            return res.redirect('/properties/mine');
+
+        const { category: category_id, price: price_id, ...rest } = req.body;
+        property.set({
+            category_id,
+            price_id,
+            ...rest,
+        });
+
+        await property.save();
+
+        res.redirect('/properties/mine');
+    } catch (error) {
+        console.log(error);
+    }
+};

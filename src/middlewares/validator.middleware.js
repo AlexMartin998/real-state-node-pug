@@ -67,7 +67,30 @@ export const validateNewProperty = async (req, res, next) => {
         // console.log(req.body);
 
         return res.render('properties/create', {
-            title: 'Iniciar Sesion',
+            title: 'Crear Propiedad',
+            errores: errors.array(),
+            categories,
+            prices,
+            csrfToken: req.csrfToken(),
+            add: req.body,
+        });
+    }
+
+    return next();
+};
+
+export const validateEditProperty = async (req, res, next) => {
+    console.log(req.body);
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        const [categories, prices] = await Promise.all([
+            Category.findAll(),
+            Price.findAll(),
+        ]);
+        // console.log(req.body);
+
+        return res.render('properties/edit', {
+            title: 'Editar Propiedad',
             errores: errors.array(),
             categories,
             prices,
@@ -135,4 +158,18 @@ export const newPropertyRules = () => [
     body('wc', 'Select the number of wc!').isNumeric(),
     body('lat', 'Locate the Property on the map!').isNumeric(),
     validateNewProperty,
+];
+export const editPropertyRules = () => [
+    body('title', 'Title is required!').notEmpty(),
+    body('description', 'Description is required!')
+        .notEmpty()
+        .isLength({ max: 210 })
+        .withMessage('Description is too long!'),
+    body('category', 'Category is required!').isNumeric(),
+    body('price', 'Select a price range!').isNumeric(),
+    body('rooms', 'Select the number of rooms!').isNumeric(),
+    body('parking', 'Select the number of parking spaces!').isNumeric(),
+    body('wc', 'Select the number of wc!').isNumeric(),
+    body('lat', 'Locate the Property on the map!').isNumeric(),
+    validateEditProperty,
 ];

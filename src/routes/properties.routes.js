@@ -3,12 +3,15 @@
 import { Router } from 'express';
 import {
     createProperty,
+    editProperty,
     renderAddImageView,
     renderCreatePropForm,
+    renderEditView,
     renderMyProperties,
     saveImage,
 } from '../controllers/index.js';
 import {
+    editPropertyRules,
     newPropertyRules,
     protectWithJwt,
     upload,
@@ -30,5 +33,10 @@ router
     .route('/add-image/:id')
     .get(renderAddImageView)
     .post(upload.single('image'), saveImage);
+
+router
+    .route('/edit/:id')
+    .get(renderEditView)
+    .post(editPropertyRules(), editProperty);
 
 export default router;
