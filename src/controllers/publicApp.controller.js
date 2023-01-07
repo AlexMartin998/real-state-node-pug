@@ -1,5 +1,6 @@
 'use strict';
 
+import { utils } from '../config/index.js';
 import { Category, Price, Property } from './../models/index.js';
 
 export const renderHome = async (req, res) => {
@@ -14,13 +15,13 @@ export const renderHome = async (req, res) => {
             Price.findAll({ raw: true }),
             Property.findAll({
                 limit: 3,
-                where: { category_id: 1 },
+                where: { category_id: utils.house_id },
                 include: [{ model: Price, as: 'price' }],
                 order: [['createdAt', 'DESC']],
             }),
             Property.findAll({
                 limit: 3,
-                where: { category_id: 1 },
+                where: { category_id: utils.department_id },
                 include: [{ model: Price, as: 'price' }],
                 order: [['createdAt', 'DESC']],
             }),

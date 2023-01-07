@@ -19,3 +19,5 @@ export const EMAIL_PORT = process.env.EMAIL_PORT;
 
 export const BACKEND_URL = process.env.BACKEND_URL;
 export const SECRETORKEY_JWT = process.env.SECRETORKEY_JWT;
+
+export const utils = { house_id: 1, department_id: 2 };
