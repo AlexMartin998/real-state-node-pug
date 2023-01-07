@@ -1,5 +1,6 @@
 'use strict';
 
+import { unlink } from 'node:fs/promises';
 import { Category, Price, Property } from './../models/index.js';
 
 export const renderMyProperties = async (req, res) => {
@@ -14,6 +15,7 @@ export const renderMyProperties = async (req, res) => {
         res.render('./properties/admin', {
             title: 'Mis propiedades',
             properties,
+            csrfToken: req.csrfToken(),
         });
     } catch (error) {
         console.log(error);
@@ -143,6 +145,24 @@ export const editProperty = async (req, res) => {
         });
 
         await property.save();
+
+        res.redirect('/properties/mine');
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+export const deleteProperty = async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        const property = await Property.findByPk(id);
+        if (!property || +property.user_id !== +req.authenticatedUser.id)
+            return res.redirect('/properties/mine');
+
+        // delete propertie and its img
+        await unlink(`./src/public/uploads/${property.image}`);
+        await property.destroy();
 
         res.redirect('/properties/mine');
     } catch (error) {

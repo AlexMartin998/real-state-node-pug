@@ -3,6 +3,7 @@
 import { Router } from 'express';
 import {
     createProperty,
+    deleteProperty,
     editProperty,
     renderAddImageView,
     renderCreatePropForm,
@@ -38,5 +39,7 @@ router
     .route('/edit/:id')
     .get(renderEditView)
     .post(editPropertyRules(), editProperty);
+
+router.route('/delete/:id').post(deleteProperty);
 
 export default router;
