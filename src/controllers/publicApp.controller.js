@@ -16,13 +16,13 @@ export const renderHome = async (req, res) => {
                 limit: 3,
                 where: { category_id: 1 },
                 include: [{ model: Price, as: 'price' }],
-                order: ['createdAt'],
+                order: [['createdAt', 'DESC']],
             }),
             Property.findAll({
                 limit: 3,
                 where: { category_id: 1 },
                 include: [{ model: Price, as: 'price' }],
-                order: ['createdAt'],
+                order: [['createdAt', 'DESC']],
             }),
         ]);
 

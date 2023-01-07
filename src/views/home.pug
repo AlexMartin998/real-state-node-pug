@@ -26,12 +26,32 @@ block contenido
                         option(value=price.id)= price.name
 
 
-
-
         div(id="map-home" class="h-[600px] mt-6")
 
 
-        //- pre= JSON.stringify(property, null, 3)
+        section(class="py-5")
+            h2(class="text-center text-4xl font-extrabold pt-10") Casas en venta
+
+            div(class="grid grid-cols-1 lg:grid-cols-3 gap-5 mt-14")
+                each house in recentlyAddedHouses
+                    div(class="bg-white shadow rounded-lg")
+                        img(src=`/uploads/${house.image}`, alt=`Imagen de la propiedad ${house.title}` class="object-cover h-72 w-full")
+                        div(class="p-5 space-y-3")
+                            h3(class="text-xl font-bold")= house.title
+                            p(class="text-sm text-gray-600") Habitaciones 
+                                span(class="text-gray-800 font-bold")= house.rooms
+                            p(class="text-sm text-gray-600") WC 
+                                span(class="text-gray-800 font-bold")= house.wc
+                            p(class="text-sm text-gray-600") Precio 
+                                span(class="text-gray-800 font-bold")= house.price.name
+
+                            a(href=`/properties/${house.id}` class="bg-indigo-600 w-full text-center block font-bold text-white p-2 uppercase rounded btn-home-vp") Ver Propiedad
+
+            
+            
+            //- pre= JSON.stringify(recentlyAddedHouses, null, 3)
+
+
 
 
 block scripts

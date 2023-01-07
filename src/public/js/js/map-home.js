@@ -2,7 +2,7 @@
 (() => {
     const lat = -0.176701;
     const lng = -78.4815577;
-    const map = L.map('map-home').setView([lat, lng], 16);
+    const map = L.map('map-home').setView([lat, lng], 15);
 
     const categoriesSelect = document.querySelector('#categories');
     const pricesSelect = document.querySelector('#prices');
