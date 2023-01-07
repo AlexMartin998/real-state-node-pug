@@ -4,7 +4,14 @@
     const lng = -78.4815577;
     const map = L.map('map-home').setView([lat, lng], 16);
 
+    const categoriesSelect = document.querySelector('#categories');
+    const pricesSelect = document.querySelector('#prices');
+
     let markers = new L.FeatureGroup().addTo(map);
+    let properties = [];
+
+    // Filters
+    const filters = { category: 0, price: 0 };
 
     // Provider
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -12,12 +19,26 @@
             '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
     }).addTo(map);
 
+    // Filtering
+    categoriesSelect.addEventListener('change', e => {
+        const categoryId = +e.target.value;
+        filters.category = categoryId;
+
+        // categoryId > 0 && getFilteredProperties();
+        getFilteredProperties();
+    });
+    pricesSelect.addEventListener('change', e => {
+        filters.price = +e.target.value;
+
+        getFilteredProperties();
+    });
+
     const getProperties = async () => {
         try {
             const url = '/api/v1/properties';
             const resp = await fetch(url);
-            const { properties } = await resp.json();
-
+            const { properties: propertiesData } = await resp.json();
+            properties = propertiesData;
             properties.length && showProperties(properties);
         } catch (error) {
             console.log(error);
@@ -26,6 +47,8 @@
     getProperties();
 
     const showProperties = properties => {
+        markers.clearLayers();
+
         properties.forEach(
             ({ id, lat, lng, title, image, price, category }) => {
                 const marker = new L.marker([lat, lng], {
@@ -45,5 +68,17 @@
                 markers.addLayer(marker);
             }
         );
+    };
+
+    const getFilteredProperties = () => {
+        const result = properties
+            .filter(p =>
+                filters.category ? +p.category_id === +filters.category : p
+            )
+            .filter(fp =>
+                filters.price ? +fp.price_id === +filters.price : fp
+            );
+
+        showProperties(result);
     };
 })();

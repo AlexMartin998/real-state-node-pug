@@ -658,6 +658,14 @@ video {
   width: 1.5rem;
 }
 
+.w-2\/4 {
+  width: 50%;
+}
+
+.w-24 {
+  width: 6rem;
+}
+
 .max-w-md {
   max-width: 28rem;
 }
@@ -704,6 +712,10 @@ video {
 
 .gap-2 {
   gap: 0.5rem;
+}
+
+.gap-7 {
+  gap: 1.75rem;
 }
 
 .space-y-5 > :not([hidden]) ~ :not([hidden]) {
@@ -933,6 +945,11 @@ video {
 .py-5 {
   padding-top: 1.25rem;
   padding-bottom: 1.25rem;
+}
+
+.py-20 {
+  padding-top: 5rem;
+  padding-bottom: 5rem;
 }
 
 .text-center {
@@ -1178,8 +1195,16 @@ video {
     width: 66.666667%;
   }
 
+  .md\:w-auto {
+    width: auto;
+  }
+
   .md\:grid-cols-2 {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .md\:flex-row {
+    flex-direction: row;
   }
 
   .md\:items-center {
