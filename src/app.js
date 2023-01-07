@@ -4,6 +4,7 @@ import express from 'express';
 
 import { setupMiddlewares } from './middlewares/index.js';
 import {
+    apiRoutes,
     authRoutes,
     propertiesRoutes,
     publicRoutes,
@@ -20,6 +21,7 @@ setupMiddlewares(app);
 app.use('/auth', authRoutes);
 app.use('/api/users', usersRoutes);
 app.use('/properties', propertiesRoutes);
+app.use('/api/v1', apiRoutes);
 app.use('/', publicRoutes);
 
 export default app;
