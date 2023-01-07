@@ -23,7 +23,7 @@ block contenido
 
                                 div(class="sm:w-2/4 md:w-3/6 lg:w-4/6 space-y-3")
                                     a(href=`/properties/${property.id}` class="block text-2xl font-extrabold text-indigo-600 truncate")=property.title
-                                    p(class="text-sm text-black font-bold")=property.Category.name
+                                    p(class="text-sm text-black font-bold")=property.category.name
                                     p(class="text-sm text-gray-500 font-bold flex items-center gap-2")
                                         svg(xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6")
                                             path(stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m-3-2.818l.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 11-18 0 9 9 0 0118 0z")
@@ -38,7 +38,34 @@ block contenido
                                     form(action=`/properties/delete/${property.id}` method="POST")
                                         input(type="hidden" name="_csrf" value=csrfToken)
                                         input(type="submit" class="w-full px-2 py-2 md:py-1 text-xs leading-5 font-semibold rounded cursor-pointer bg-red-100 text-red-800" value='Eliminar')
+            
+                div(class="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6")
+                    div(class="flex-1 flex justify-between sm:hidden")
+                        a(href=`/properties/mine?page=${page - 1}` class=`${page == 1 ? 'pointer-events-none' : ''} relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50`) Anterior
+                        a(href=`/properties/mine?page=${page + 1}` class=`${page == pages ? 'pointer-events-none' : ''} relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50`) Siguiente
+
+                    div(class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between")
+                        p(class="text-sm text-gray-700 gap-2") Mostrando 
+                            span(class="font-medium") #{offset + 1} a 
+                            span(class="font-medium") #{total < limit + offset ? total : limit + offset} de 
+                            span(class="font-medium") #{total} 
+
+                    div(class="hidden sm:block")
+                        nav(class="relative z-0 inline-flex rounded-md shadow-sm")
+                            - var n = 1
+                                while n <= pages
+                                    a(href=`/properties/mine?page=${n}` class=`${page == n ? 'bg-indigo-50 border-indigo-500 text-indigo-600 pointer-events-none' : 'bg-white border-gray-300 text-gray-500 hover:bg-gray-50'} relative inline-flex intems-center px-4 py-2 border text-sm font-medium`) #{n++}
+
+
         else
             p.text-center No tienes propiedades registradas
 
 
+
+//-//- Disable click event
+block scripts
+    script.
+        //- const currentPageBtn = document.querySelector(".cursor-not-allowed");
+        //- currentPageBtn.setAttribute("style", "pointer-events: none");
+        const currentPageBtn = document.querySelector(".pointer-events-none");
+        currentPageBtn.onclick = () => false;

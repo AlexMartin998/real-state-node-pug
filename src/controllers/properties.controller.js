@@ -5,20 +5,39 @@ import { Category, Price, Property } from './../models/index.js';
 
 export const renderMyProperties = async (req, res) => {
     const { id } = req.authenticatedUser;
+    const { page } = req.query;
+
+    // pagination
+    const expression = /^[1-9]$/;
+    if (!expression.test(page)) return res.redirect('/properties/mine?page=1');
+    const limit = 10;
+    const offset = page * limit - limit;
 
     try {
-        const properties = await Property.findAll({
-            where: { user_id: id },
-            include: [
-                { model: Category, as: 'category' },
-                { model: Price, as: 'price' },
-            ], // as xq en esa relacion si estableci as - si en el model tiene as aqui tb debe tener sino da error
-        });
+        const [properties, total] = await Promise.all([
+            Property.findAll({
+                limit,
+                offset,
+                where: { user_id: id },
+                include: [
+                    { model: Category, as: 'category' },
+                    { model: Price, as: 'price' },
+                ], // as xq en esa relacion si estableci as - si en el model tiene as aqui tb debe tener sino da error
+            }),
+            Property.count({ where: { user_id: id } }),
+        ]);
 
         res.render('./properties/admin', {
             title: 'Mis propiedades',
             properties,
             csrfToken: req.csrfToken(),
+
+            // pagination
+            pages: Math.ceil(total / limit),
+            page: +page,
+            total,
+            offset,
+            limit,
         });
     } catch (error) {
         console.log(error);
