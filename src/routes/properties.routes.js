@@ -11,12 +11,14 @@ import {
     renderMyProperties,
     renderPropertyView,
     saveImage,
+    sendMessage,
 } from '../controllers/index.js';
 import {
     editPropertyRules,
     identifyUser,
     newPropertyRules,
     protectWithJwt,
+    sendMessageRules,
     upload,
 } from '../middlewares/index.js';
 
@@ -45,6 +47,9 @@ router
 router.route('/delete/:id').post(protectWithJwt, deleteProperty);
 
 // public
-router.get('/:id', identifyUser, renderPropertyView);
+router
+    .route('/:id')
+    .get(identifyUser, renderPropertyView)
+    .post(identifyUser, sendMessageRules(), sendMessage);
 
 export default router;

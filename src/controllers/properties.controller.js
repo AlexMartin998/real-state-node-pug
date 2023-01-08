@@ -2,7 +2,7 @@
 
 import { unlink } from 'node:fs/promises';
 import { isAdvertiser } from '../helpers/index.js';
-import { Category, Price, Property } from './../models/index.js';
+import { Category, Price, Property, Message } from './../models/index.js';
 
 export const renderMyProperties = async (req, res) => {
     const { id } = req.authenticatedUser;
@@ -212,6 +212,37 @@ export const renderPropertyView = async (req, res) => {
             user: req.user,
             isAdvertiser: isAdvertiser(req.user?.id, property.user_id),
         });
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+export const sendMessage = async (req, res) => {
+    const { id } = req.params;
+    const { message } = req.body;
+    const { id: property_id } = req.params;
+    const { id: user_id } = req.user;
+
+    try {
+        const property = await Property.findByPk(id, {
+            include: [
+                { model: Category, as: 'category' },
+                { model: Price, as: 'price' },
+            ],
+        });
+        if (!property) return res.redirect('/404');
+
+        await Message.create({ message, property_id, user_id });
+
+        res.redirect('/');
+        // res.render('./properties/show', {
+        //     title: property.title,
+        //     property,
+        //     csrfToken: req.csrfToken(),
+        //     user: req.user,
+        //     isAdvertiser: isAdvertiser(req.user?.id, property.user_id),
+        //     sent: true,
+        // });
     } catch (error) {
         console.log(error);
     }

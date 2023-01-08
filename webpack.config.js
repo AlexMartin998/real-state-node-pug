@@ -9,6 +9,7 @@ export default {
         showMap: './src/public/js/js/show-map.js',
         homeMap: './src/public/js/js/map-home.js',
         searcher: './src/public/js/js/searcher.js',
+        show: './src/public/js/js/show.js',
     },
     output: {
         filename: '[name].js',

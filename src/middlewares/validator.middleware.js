@@ -1,8 +1,8 @@
 'use strict';
 
 import { body, validationResult } from 'express-validator';
-import { Category, Price } from './../models/index.js';
-import { isAlreadyRegistered } from '../helpers/index.js';
+import { Category, Price, Property } from './../models/index.js';
+import { isAdvertiser, isAlreadyRegistered } from '../helpers/index.js';
 
 export const validateRegister = (req, res, next) => {
     const errors = validationResult(req);
@@ -80,7 +80,6 @@ export const validateNewProperty = async (req, res, next) => {
 };
 
 export const validateEditProperty = async (req, res, next) => {
-    console.log(req.body);
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         const [categories, prices] = await Promise.all([
@@ -96,6 +95,30 @@ export const validateEditProperty = async (req, res, next) => {
             prices,
             csrfToken: req.csrfToken(),
             add: req.body,
+        });
+    }
+
+    return next();
+};
+
+export const validateSendMessage = async (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        const property = await Property.findByPk(req.id, {
+            include: [
+                { model: Category, as: 'category' },
+                { model: Price, as: 'price' },
+            ],
+        });
+        if (!property) return res.redirect('/404');
+
+        return res.render('./properties/show', {
+            title: property.title,
+            errores: errors.array(),
+            property,
+            csrfToken: req.csrfToken(),
+            user: req.user,
+            isAdvertiser: isAdvertiser(req.user?.id, property.user_id),
         });
     }
 
@@ -172,4 +195,9 @@ export const editPropertyRules = () => [
     body('wc', 'Select the number of wc!').isNumeric(),
     body('lat', 'Locate the Property on the map!').isNumeric(),
     validateEditProperty,
+];
+export const sendMessageRules = () => [
+    body('message', 'Message is required or is too short!').notEmpty(),
+
+    validateSendMessage,
 ];

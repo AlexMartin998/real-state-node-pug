@@ -2,6 +2,7 @@ import Category from './Category.js';
 import Price from './Price.js';
 import Property from './Property.js';
 import User from './User.js';
+import Message from './Message.js';
 
 // // Crea la FK en Property
 // Price.hasOne(Property, {
@@ -27,4 +28,7 @@ Property.belongsTo(Price, {
 Property.belongsTo(Category, { foreignKey: 'category_id', as: 'category' });
 Property.belongsTo(User, { foreignKey: 'user_id', as: 'user' });
 
-export { Price, Property, Category, User };
+Message.belongsTo(Property, { foreignKey: 'property_id', as: 'property' });
+Message.belongsTo(User, { foreignKey: 'user_id', as: 'user' });
+
+export { Price, Property, Category, User, Message };

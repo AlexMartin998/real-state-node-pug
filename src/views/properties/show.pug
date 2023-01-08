@@ -49,12 +49,16 @@ block contenido
                     
                     if !isAdvertiser
                         h3(class="text-2xl text-center my-10 font-extrabold text-gray-900") Vendedor
-                        if user
-                            form(method="POST")
+                        if sent
+                            p(class="p-2 text-center bg-green-100 text-green-600 uppercase font-bold") Mensaje enviado correctamente
+                        else if user
+                            p(class='bg-red-600 text-white text-xs text-center p-2 mb-6 font-bold hidden' id="error")
+
+                            form(method="POST" id="message-form")
                                 input(type="hidden" name="_csrf" value=csrfToken)
                                 div(class="space-y-5")
                                     label(for="message" ) Mensaje
-                                    textarea(class="w-full py-2 border border-gray-300 rounded-lg shadow placeholder-gray-400 placeholder:p-3" id="message" name="message" placeholder="Coloca tu mensaje aqui")
+                                    textarea(class="w-full py-2 px-2 border border-gray-300 rounded-lg shadow placeholder-gray-400 placeholder:p-3" id="message" name="message" placeholder="Coloca tu mensaje aqui")
                                     input(type="submit" value="Enviar Mensage" class="bg-indigo-600 text-white font-bold uppercase text-sm w-full p-2 cursor-pointer")
                                 
                         else
@@ -67,3 +71,4 @@ block contenido
 block scripts
     script(src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js")
     script(src="/js/showMap.js")
+    script(src="/js/show.js")
