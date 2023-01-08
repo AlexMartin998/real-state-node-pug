@@ -10,6 +10,9 @@ import {
 import { User } from '../models/index.js';
 
 export const renderLoginForm = (req, res) => {
+    const { _token } = req.cookies;
+    if (_token) return res.redirect('/');
+
     res.render('./auth/login', {
         title: 'Iniciar Sesion',
         csrfToken: req.csrfToken(),
@@ -45,14 +48,26 @@ export const login = async (req, res) => {
         const jwt = await genJWT(user.id);
 
         return res
+            .cookie('auth', true)
             .cookie('_token', jwt, { httpOnly: true }) // it wont allow access from JavaScript
-            .redirect('/properties/mine');
+            .redirect('/');
     } catch (error) {
         console.log(error);
     }
 };
 
+export const logout = async (_req, res) => {
+    return res
+        .clearCookie('_token')
+        .clearCookie('auth')
+        .status(200)
+        .redirect('/');
+};
+
 export const renderRegisterForm = (req, res) => {
+    const { _token } = req.cookies;
+    if (_token) return res.redirect('/');
+
     res.render('./auth/register', {
         title: 'Crear Cuenta',
         csrfToken: req.csrfToken(),

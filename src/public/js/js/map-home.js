@@ -50,7 +50,9 @@
         markers.clearLayers();
 
         properties.forEach(
-            ({ id, lat, lng, title, image, price, category }) => {
+            ({ id, lat, lng, title, image, price, category, published }) => {
+                if (!published) return;
+
                 const marker = new L.marker([lat, lng], {
                     autoPan: true,
                 })

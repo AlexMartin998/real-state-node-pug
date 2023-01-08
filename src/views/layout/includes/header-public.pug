@@ -4,9 +4,12 @@ header.bg-indigo-600.p-4
             h1.text-2xl.text-white.font-extrabold.text-center Bienes
                 span.font-normal Raices
 
-        nav(class="my-5 text-sm md:flex md:items-center md:gap-3 font-bold text-white space-x-6")
-            a(href="/auth/signup") Crear Cuenta
-            a(href="/auth/login") Log In
+        nav(class="my-5 text-sm md:flex md:items-center md:gap-3 font-bold text-white space-x-6" id="nav-public")
+            div(class="md:flex md:items-center md:gap-3 space-x-3" id='no-auth')
+                a(href="/auth/signup") Crear Cuenta
+                a(href="/auth/login") Log In
+            div(class="is-auth md:flex md:items-center md:gap-3 space-x-3")
+                a(href="/properties/mine") Mis propiedades
 
 
 div(class="bg-indigo-700 py-5 hidden lg:block")

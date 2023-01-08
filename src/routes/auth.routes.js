@@ -6,6 +6,7 @@ import {
     genNewPassword,
     genRecoveryToken,
     login,
+    logout,
     registerNewUser,
     renderLoginForm,
     renderPasswordRecoveryForm,
@@ -22,6 +23,8 @@ import {
 const router = Router();
 
 router.route('/login').get(renderLoginForm).post(loginRules(), login);
+
+router.post('/logout', logout);
 
 router
     .route('/signup')
