@@ -11,10 +11,23 @@ header.bg-indigo-600.p-4
 
 div(class="bg-indigo-700 py-5 hidden lg:block")
     div(class="container mx-auto flex justify-between")
-        a(href="/categories/1" class="text-sm font-bold uppercase text-white") Casas
-        a(href="/categories/2" class="text-sm font-bold uppercase text-white") Departamentos
-        a(href="/categories/3" class="text-sm font-bold uppercase text-white") Bodegas
-        a(href="/categories/4" class="text-sm font-bold uppercase text-white") Terrenos
-        a(href="/categories/5" class="text-sm font-bold uppercase text-white") Cabañas
+        nav(class="flex gap-5 items-center")
+            a(href="/categories/1" class="text-sm font-bold uppercase text-white") Casas
+            a(href="/categories/2" class="text-sm font-bold uppercase text-white") Departamentos
+            a(href="/categories/3" class="text-sm font-bold uppercase text-white") Bodegas
+            a(href="/categories/4" class="text-sm font-bold uppercase text-white") Terrenos
+            a(href="/categories/5" class="text-sm font-bold uppercase text-white") Cabañas
 
+
+        form(action="/search" method="POST" class="flex gap-3 items-center" id="form-search")
+            input(type="hidden" name="_csrf" value=csrfToken)
+
+            label(for="query" class="text-sm uppercase font-bold text-white" id='search') Busqueda
+            input(class="p-2 rounded-lg shadow text-sm" type="text" id="query" name="query" placeholder="Buscar Propiedades")
+
+            input(class="bg-indigo-800 rounded-lg hover:bg-indigo-400 text-white uppercase font-bold p-2 cursor-pointer text-sm" value="Buscar" type="submit")
+
+
+
+script(src="/js/searcher.js")
 

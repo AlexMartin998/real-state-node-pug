@@ -207,6 +207,7 @@ export const renderPropertyView = async (req, res) => {
         res.render('./properties/show', {
             title: property.title,
             property,
+            csrfToken: req.csrfToken(),
         });
     } catch (error) {
         console.log(error);

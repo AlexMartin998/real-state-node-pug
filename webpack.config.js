@@ -8,6 +8,7 @@ export default {
         addImage: './src/public/js/js/add-image.js',
         showMap: './src/public/js/js/show-map.js',
         homeMap: './src/public/js/js/map-home.js',
+        searcher: './src/public/js/js/searcher.js',
     },
     output: {
         filename: '[name].js',
