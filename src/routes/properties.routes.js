@@ -2,6 +2,7 @@
 
 import { Router } from 'express';
 import {
+    chagePropertyState,
     createProperty,
     deleteProperty,
     editProperty,
@@ -45,6 +46,8 @@ router
     .post(protectWithJwt, editPropertyRules(), editProperty);
 
 router.route('/delete/:id').post(protectWithJwt, deleteProperty);
+
+router.put('/state/:id', protectWithJwt, chagePropertyState);
 
 // public
 router

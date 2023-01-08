@@ -204,7 +204,7 @@ export const renderPropertyView = async (req, res) => {
                 { model: Price, as: 'price' },
             ],
         });
-        if (!property) return res.redirect('/404');
+        if (!property || !property.published) return res.redirect('/404');
 
         res.render('./properties/show', {
             title: property.title,
@@ -213,6 +213,25 @@ export const renderPropertyView = async (req, res) => {
             user: req.user,
             isAdvertiser: isAdvertiser(req.user?.id, property.user_id),
         });
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+export const chagePropertyState = async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        const property = await Property.findByPk(id);
+        if (!property || +property.user_id !== +req.authenticatedUser.id)
+            return res.redirect('/properties/mine');
+
+        // update property state
+        property.published = !property.published;
+
+        await property.save();
+
+        res.json({ state: property.published, ok: true });
     } catch (error) {
         console.log(error);
     }

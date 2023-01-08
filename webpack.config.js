@@ -10,6 +10,7 @@ export default {
         homeMap: './src/public/js/js/map-home.js',
         searcher: './src/public/js/js/searcher.js',
         show: './src/public/js/js/show.js',
+        chagePropertyState: './src/public/js/js/change-property-state.js',
     },
     output: {
         filename: '[name].js',
