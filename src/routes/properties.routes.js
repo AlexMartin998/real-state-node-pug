@@ -14,6 +14,7 @@ import {
 } from '../controllers/index.js';
 import {
     editPropertyRules,
+    identifyUser,
     newPropertyRules,
     protectWithJwt,
     upload,
@@ -44,6 +45,6 @@ router
 router.route('/delete/:id').post(protectWithJwt, deleteProperty);
 
 // public
-router.get('/:id', renderPropertyView);
+router.get('/:id', identifyUser, renderPropertyView);
 
 export default router;

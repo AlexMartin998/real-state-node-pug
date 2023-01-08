@@ -1,6 +1,7 @@
 'use strict';
 
 import { unlink } from 'node:fs/promises';
+import { isAdvertiser } from '../helpers/index.js';
 import { Category, Price, Property } from './../models/index.js';
 
 export const renderMyProperties = async (req, res) => {
@@ -208,6 +209,8 @@ export const renderPropertyView = async (req, res) => {
             title: property.title,
             property,
             csrfToken: req.csrfToken(),
+            user: req.user,
+            isAdvertiser: isAdvertiser(req.user?.id, property.user_id),
         });
     } catch (error) {
         console.log(error);
