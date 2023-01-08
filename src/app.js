@@ -9,6 +9,7 @@ import {
     propertiesRoutes,
     publicRoutes,
     usersRoutes,
+    messagesRoutes,
 } from './routes/index.js';
 import './db/db.js';
 
@@ -21,6 +22,7 @@ setupMiddlewares(app);
 app.use('/auth', authRoutes);
 app.use('/api/users', usersRoutes);
 app.use('/properties', propertiesRoutes);
+app.use('/messages', messagesRoutes);
 app.use('/api/v1', apiRoutes);
 app.use('/', publicRoutes);
 

@@ -28,6 +28,10 @@ Property.belongsTo(Price, {
 Property.belongsTo(Category, { foreignKey: 'category_id', as: 'category' });
 Property.belongsTo(User, { foreignKey: 'user_id', as: 'user' });
 
+// 1 Porterty tienen Muchos Messages - crea en messages
+Property.hasMany(Message, { foreignKey: 'property_id', as: 'messages' });
+
+// 1 Message tiene solo 1 Property
 Message.belongsTo(Property, { foreignKey: 'property_id', as: 'property' });
 Message.belongsTo(User, { foreignKey: 'user_id', as: 'user' });
 

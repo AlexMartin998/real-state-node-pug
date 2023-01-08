@@ -23,6 +23,7 @@ export const renderMyProperties = async (req, res) => {
                 include: [
                     { model: Category, as: 'category' },
                     { model: Price, as: 'price' },
+                    { model: Message, as: 'messages' },
                 ], // as xq en esa relacion si estableci as - si en el model tiene as aqui tb debe tener sino da error
             }),
             Property.count({ where: { user_id: id } }),
@@ -231,6 +232,8 @@ export const sendMessage = async (req, res) => {
             ],
         });
         if (!property) return res.redirect('/404');
+
+        // TODO: notificar al vendedor, x email, q tiene 1 mensaje
 
         await Message.create({ message, property_id, user_id });
 
