@@ -1,6 +1,7 @@
 'use strict';
 
 import { Property, Message, User } from './../models/index.js';
+import { formatDate } from '../helpers/index.js';
 
 export const renderMessages = async (req, res) => {
     const { propertyId: id } = req.params;
@@ -10,7 +11,10 @@ export const renderMessages = async (req, res) => {
                 {
                     model: Message,
                     as: 'messages',
-                    include: { model: User.scope('removePassword'), as: 'user' },
+                    include: {
+                        model: User.scope('removePassword'),
+                        as: 'user',
+                    },
                 },
             ],
         });
@@ -21,6 +25,7 @@ export const renderMessages = async (req, res) => {
         res.render('./properties/messages', {
             title: 'Mensajes',
             messages: property.messages,
+            formatDate,
         });
     } catch (error) {
         console.log(error);
