@@ -12,6 +12,7 @@ import {
 const db = new Sequelize(DB_NAME, DB_USER, DB_PASSWORD, {
     host: DB_HOST, // docker-compose-dev.yml
     dialect: DB_DIALECT,
+    // dialectOptions: { ssl: {} }, //scalePlanet - online - serveles, no relaciones x fk
     define: { timestamps: true },
 
     pool: {
