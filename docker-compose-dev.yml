@@ -38,6 +38,7 @@ services:
         depends_on:
             - db
         volumes:
-            - .:/usr/src/app
+            - .:/app
+
 volumes:
     mysql_db:
