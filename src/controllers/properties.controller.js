@@ -28,7 +28,7 @@ export const renderMyProperties = async (req, res) => {
             }),
             Property.count({ where: { user_id: id } }),
         ]);
-
+        console.log(properties);
         res.render('./properties/admin', {
             title: 'Mis propiedades',
             properties,

@@ -1,5 +1,6 @@
 div(class="bg-white shadow rounded-lg")
-    img(src=`/uploads/${property.image}`, alt=`Imagen de la propiedad ${property.title}` class="object-cover h-72 w-full")
+    //- img(src=`/uploads/${property.image}`, alt=`Imagen de la propiedad ${property.title}` class="object-cover h-72 w-full")
+    img(src=`${property.image}`, alt=`Imagen de la propiedad ${property.title}` class="object-cover h-72 w-full")
     div(class="p-5 space-y-3")
         h3(class="text-xl font-bold")= property.title
         p(class="text-sm text-gray-600") Habitaciones 

@@ -61,7 +61,7 @@
                         `
                         <p class="text-indigo-600 font-bold">${category?.name}</p>
                         <h1 class="text-xs font-extrabold uppercase mb-3">${title}</h1>
-                        <img src="/uploads/${image}" alt="Imagen de la propiedad ${title}"/>
+                        <img src="${image}" alt="Imagen de la propiedad ${title}"/>
                         <p class="text-gray-600 font-bold">${price?.name}</p>
                         <a href="/properties/${id}" class="text-btn-popup bg-indigo-600 block p-2 text-center font-bold uppercase text-white" >Ver Propiedad</a>
                         `

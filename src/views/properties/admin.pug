@@ -25,7 +25,9 @@ block contenido
                             div(class="p-6 w-full flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-8 md:space-y-0 gap-4")
                                 div(class="sm:w-1/4 md:w-1/6")
                                     //- auto apunto a /public
-                                    img(src=`/uploads/${property.image}`, alt=`Imagen propiedad: ${property.title}` class="w-full block")
+                                    //- img(src=`/uploads/${property.image}`, alt=`Imagen propiedad: ${property.title}` class="w-full block")
+                                    //- cloudinary url:
+                                    img(src=`${property.image}`, alt=`Imagen propiedad: ${property.title}` class="w-full block")
 
                                 div(class="sm:w-2/4 md:w-3/6 lg:w-4/6 space-y-3")
                                     a(href=`/properties/${property.id}` class="block text-2xl font-extrabold text-indigo-600 truncate")=property.title
