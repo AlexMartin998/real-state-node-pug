@@ -13,7 +13,7 @@
 
 ## Running the app
 
-```
+```bash
 # install dependencies
 pnpm i
 
@@ -29,17 +29,36 @@ pnpm start
 
 Running the app with docker
 
-```
+```bash
 docker compose up --build
 ```
 
 Running the app in a development environment with docker on port 3300
 
-```
+```bash
 pnpm i
 
 docker compose -f docker-compose-dev.yml up --build
 ```
+
+## Run SEED
+
+```bash
+# delete data
+pnpm run db:delete
+
+# populate db
+pnpm run db:import
+```
+
+## View demo
+
+To see the real-time behavior you can log in with:
+
+-   User 1: `adrian@test.com` and password `123123`.
+-   User 2: `alex@test.com` and password `321321`.
+
+[Demo](https://real-state-node-pug-production.up.railway.app/)
 
 ## Screenshots
 
