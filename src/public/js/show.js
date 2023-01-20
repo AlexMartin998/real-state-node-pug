@@ -16,7 +16,7 @@
   \**********************************/
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\nconst messageForm = document.querySelector('#message-form');\n\nmessageForm?.addEventListener('submit', e => {\n    const message = document.querySelector('#message').value.trim();\n    if (!message || message.length < 9) {\n        e.preventDefault();\n        const errorBox = document.querySelector('#error');\n        errorBox.classList.remove('hidden');\n        errorBox.textContent =\n            'El mensaje no puede estar vacio o ser muy corto.';\n        return;\n    }\n});\n\n\n//# sourceURL=webpack://a_bienesraices_mvc/./src/public/js/js/show.js?");
+eval("__webpack_require__.r(__webpack_exports__);\nconst messageForm = document.querySelector('#message-form');\n\nmessageForm?.addEventListener('submit', e => {\n    const message = document.querySelector('#message').value.trim();\n    if (!message || message.length < 9) {\n        e.preventDefault();\n        const errorBox = document.querySelector('#error');\n        errorBox.classList.remove('hidden');\n        errorBox.textContent =\n            'El mensaje no puede estar vacio o ser muy corto.';\n        return;\n    }\n\n    alert('Acción no permitira en la Demo, clone el repo.');\n});\n\n\n//# sourceURL=webpack://a_bienesraices_mvc/./src/public/js/js/show.js?");
 
 /***/ })
 

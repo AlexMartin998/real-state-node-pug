@@ -57,14 +57,12 @@ export const validateLogin = (req, res, next) => {
 };
 
 export const validateNewProperty = async (req, res, next) => {
-    console.log(req.body);
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         const [categories, prices] = await Promise.all([
             Category.findAll(),
             Price.findAll(),
         ]);
-        // console.log(req.body);
 
         return res.render('properties/create', {
             title: 'Crear Propiedad',
@@ -86,7 +84,6 @@ export const validateEditProperty = async (req, res, next) => {
             Category.findAll(),
             Price.findAll(),
         ]);
-        // console.log(req.body);
 
         return res.render('properties/edit', {
             title: 'Editar Propiedad',

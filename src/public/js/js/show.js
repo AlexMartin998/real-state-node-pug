@@ -10,4 +10,6 @@ messageForm?.addEventListener('submit', e => {
             'El mensaje no puede estar vacio o ser muy corto.';
         return;
     }
+
+    alert('Acción no permitira en la Demo, clone el repo.');
 });

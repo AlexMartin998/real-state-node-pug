@@ -1,12 +1,6 @@
 'use strict';
 
-import bcryptjs from 'bcryptjs';
-import {
-    emailRegister,
-    emailResetPassword,
-    genJWT,
-    genTempToken,
-} from '../helpers/index.js';
+import { genJWT } from '../helpers/index.js';
 import { User } from '../models/index.js';
 
 export const renderLoginForm = (req, res) => {
@@ -21,7 +15,6 @@ export const renderLoginForm = (req, res) => {
 
 export const login = async (req, res) => {
     const { email, password } = req.body;
-
     try {
         const user = await User.findOne({ where: { email } });
         const matchPass = await user.comparePassword(password);
@@ -53,6 +46,15 @@ export const login = async (req, res) => {
             .redirect('/');
     } catch (error) {
         console.log(error);
+        return res.render('auth/login', {
+            title: 'Iniciar Sesion',
+            errores: [
+                {
+                    msg: 'Hubo un problema al iniciar sesión. Comprueba tu correo electrónico y contraseña o crea una cuenta.',
+                },
+            ],
+            csrfToken: req.csrfToken(),
+        });
     }
 };
 
@@ -75,10 +77,10 @@ export const renderRegisterForm = (req, res) => {
 };
 
 export const registerNewUser = async (req, res) => {
-    const { name, email, password } = req.body;
+    // const { name, email, password } = req.body;
 
     try {
-        const newUser = await User.create({
+        /* const newUser = await User.create({
             name,
             email,
             password,
@@ -86,12 +88,15 @@ export const registerNewUser = async (req, res) => {
         });
 
         // Send confirmation email
-        await emailRegister({ email, name, token: newUser.token });
+        await emailRegister({ email, name, token: newUser.token }); */
 
         res.render('./templates/message', {
             title: 'Cuenta Creada Correctamente',
-            message:
-                'Usuario registrado satisfactoriamente, verifica tu email.',
+            message: `
+                Usuario registrado satisfactoriamente, verifica tu email.
+
+                ---> Acción no permitira en la Demo, clone el repo. <---
+            `,
         });
     } catch (error) {
         console.log(error);
@@ -145,18 +150,28 @@ export const genRecoveryToken = async (req, res) => {
                 errores: [{ msg: 'Usuario no registrado!' }],
             });
 
+        /*
         user.token = genTempToken();
         await user.save();
 
         // Send email with token/instructions
         await emailResetPassword({ email, name: user.name, token: user.token });
-
+         */
         res.render('./templates/message', {
             title: 'Restablece tu Password',
-            message: 'Hemos enviado un email con las instruccionesUsuario.',
+            message: `
+                Hemos enviado un email con las instruccionesUsuario.
+
+                ---> Acción no permitira en la Demo, clone el repo. <---
+            `,
         });
     } catch (error) {
         console.log(error);
+        return res.render('./auth/recovery-password', {
+            title: 'Recupera tu acceso a Bienes Raices',
+            csrfToken: req.csrfToken(),
+            errores: [{ msg: 'Usuario no registrado!' }],
+        });
     }
 };
 
@@ -185,16 +200,16 @@ export const renderPasswordResetForm = async (req, res) => {
 };
 
 export const genNewPassword = async (req, res) => {
-    const { token } = req.params;
-    const { password } = req.body;
+    // const { token } = req.params;
+    // const { password } = req.body;
 
     try {
-        // The user isn't validated because it's already done by the previous method <- only in MVC
+        /*  // The user isn't validated because it's already done by the previous method <- only in MVC
         const user = await User.findOne({ where: { token } });
         user.password = await bcryptjs.hash(password, 10);
         user.token = null;
 
-        await user.save();
+        await user.save(); */
 
         res.render('./auth/confirm-account', {
             title: 'Password Restablecido',

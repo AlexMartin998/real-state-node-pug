@@ -1,8 +1,7 @@
 'use strict';
 
-import { unlink } from 'node:fs/promises';
 import { isAdvertiser } from '../helpers/index.js';
-import { Category, Price, Property, Message } from './../models/index.js';
+import { Category, Message, Price, Property } from './../models/index.js';
 
 export const renderMyProperties = async (req, res) => {
     const { id } = req.authenticatedUser;
@@ -28,7 +27,7 @@ export const renderMyProperties = async (req, res) => {
             }),
             Property.count({ where: { user_id: id } }),
         ]);
-        console.log(properties);
+
         res.render('./properties/admin', {
             title: 'Mis propiedades',
             properties,
@@ -154,10 +153,10 @@ export const renderEditView = async (req, res) => {
 };
 
 export const editProperty = async (req, res) => {
-    const { id } = req.params;
+    // const { id } = req.params;
 
     try {
-        const property = await Property.findByPk(id);
+        /* const property = await Property.findByPk(id);
         if (!property || +property.user_id !== +req.authenticatedUser.id)
             return res.redirect('/properties/mine');
 
@@ -168,7 +167,7 @@ export const editProperty = async (req, res) => {
             ...rest,
         });
 
-        await property.save();
+        await property.save(); */
 
         res.redirect('/properties/mine');
     } catch (error) {
@@ -177,16 +176,16 @@ export const editProperty = async (req, res) => {
 };
 
 export const deleteProperty = async (req, res) => {
-    const { id } = req.params;
+    // const { id } = req.params;
 
     try {
-        const property = await Property.findByPk(id);
+        /* const property = await Property.findByPk(id);
         if (!property || +property.user_id !== +req.authenticatedUser.id)
             return res.redirect('/properties/mine');
 
         // delete propertie and its img
         await unlink(`./src/public/uploads/${property.image}`);
-        await property.destroy();
+        await property.destroy(); */
 
         res.redirect('/properties/mine');
     } catch (error) {
@@ -238,13 +237,13 @@ export const chagePropertyState = async (req, res) => {
 };
 
 export const sendMessage = async (req, res) => {
-    const { id } = req.params;
-    const { message } = req.body;
-    const { id: property_id } = req.params;
-    const { id: user_id } = req.user;
+    // const { id } = req.params;
+    // const { message } = req.body;
+    // const { id: property_id } = req.params;
+    // const { id: user_id } = req.user;
 
     try {
-        const property = await Property.findByPk(id, {
+        /*         const property = await Property.findByPk(id, {
             include: [
                 { model: Category, as: 'category' },
                 { model: Price, as: 'price' },
@@ -254,17 +253,8 @@ export const sendMessage = async (req, res) => {
 
         // TODO: notificar al vendedor, x email, q tiene 1 mensaje
 
-        await Message.create({ message, property_id, user_id });
-
+        await Message.create({ message, property_id, user_id }); */
         res.redirect('/');
-        // res.render('./properties/show', {
-        //     title: property.title,
-        //     property,
-        //     csrfToken: req.csrfToken(),
-        //     user: req.user,
-        //     isAdvertiser: isAdvertiser(req.user?.id, property.user_id),
-        //     sent: true,
-        // });
     } catch (error) {
         console.log(error);
     }

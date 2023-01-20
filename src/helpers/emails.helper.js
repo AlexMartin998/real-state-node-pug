@@ -43,7 +43,6 @@ export const emailRegister = async emailData => {
 
 export const emailResetPassword = async emailData => {
     const { name, email, token } = emailData;
-    console.log('email:', { name, email, token });
 
     const transport = setTransport();
 

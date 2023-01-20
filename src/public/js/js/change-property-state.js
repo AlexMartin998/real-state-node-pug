@@ -4,6 +4,8 @@
         .querySelector('meta[name="csrf-token"]')
         .getAttribute('content');
 
+    const deleteForm = document.querySelector('#delete-form');
+
     changeStateBtns.forEach(btn => {
         btn.addEventListener('click', async e => {
             const { propertyId: id } = e.target.dataset;
@@ -44,5 +46,11 @@
                 console.log(error);
             }
         });
+    });
+
+    deleteForm.addEventListener('submit', e => {
+        e.preventDefault();
+
+        alert('Acción no permitira en la Demo, clone el repo.');
     });
 })();

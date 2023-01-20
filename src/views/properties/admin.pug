@@ -43,7 +43,7 @@ block contenido
                                     
                                     a(href=`/properties/edit/${property.id}` class="text-center px-2 py-2 md:py-1 text-xs leading-5 font-semibold rounded cursor-pointer bg-indigo-100 text-indigo-800") Editar
 
-                                    form(action=`/properties/delete/${property.id}` method="POST")
+                                    form(action=`/properties/delete/${property.id}` method="POST" id="delete-form")
                                         input(type="hidden" name="_csrf" value=csrfToken)
                                         input(type="submit" class="w-full px-2 py-2 md:py-1 text-xs leading-5 font-semibold rounded cursor-pointer bg-red-100 text-red-800" value='Eliminar')
             

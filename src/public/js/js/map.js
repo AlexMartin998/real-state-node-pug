@@ -5,6 +5,7 @@
     const lat = +document.querySelector('#lat').value || -0.176701;
     const lng = +document.querySelector('#lng').value || -78.4815577;
     const mapa = L.map('map').setView([lat, lng], 16);
+    const editBtn = document.querySelector('#edit-property');
 
     // Provider & Geocoder
     const geocodeService = L.esri.Geocoding.geocodeService();
@@ -58,4 +59,8 @@
                     result?.latlng?.lng ?? '';
             });
     });
+
+    editBtn.onclick = () => {
+        alert('Acción no permitira en la Demo, clone el repo.');
+    };
 })();
